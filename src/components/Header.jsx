@@ -1,16 +1,27 @@
+import { NavLink } from "react-router-dom";
+
 export default function Header() {
   return (
     <header className="bg-dark py-4">
       <div className="container d-flex justify-content-around">
-        <a href="/" className="text-decoration-none text-light mx-2">
+        <NavLink
+          to="/"
+          className="nav-link text-decoration-none text-light mx-2"
+        >
           Home
-        </a>
-        <a href="/about" className="text-decoration-none text-light mx-2">
+        </NavLink>
+        <NavLink
+          to="/about"
+          className="nav-link text-decoration-none text-light mx-2"
+        >
           About
-        </a>
-        <a href="/posts" className="text-decoration-none text-light mx-2">
+        </NavLink>
+        <NavLink
+          to="/posts"
+          className="nav-link text-decoration-none text-light mx-2"
+        >
           Lista Post
-        </a>
+        </NavLink>
       </div>
     </header>
   );
