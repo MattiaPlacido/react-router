@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="/about" element={<h2>AboutPage</h2>} />
+          {<Route path="/about" element={<h2>AboutPage</h2>} />}
         </Route>
       </Routes>
     </BrowserRouter>
