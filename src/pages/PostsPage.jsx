@@ -25,9 +25,12 @@ export default function PostsPage() {
 
   return (
     <main className="container py-5">
-      <div className="row row-cols-2">
+      <div className="row row-cols-2 gx-0">
         {postData.map((post) => (
-          <div className="card col-6" key={post.key}>
+          <div
+            className={post.published ? "card col-6" : "d-none"}
+            key={post.key}
+          >
             <img
               src={post.image || "https://via.placeholder.com/600/771796"}
               className="card-img-top mx-auto w-100 "
