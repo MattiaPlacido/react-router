@@ -1,7 +1,7 @@
-export default function HomePage() {
+export default function AboutPage() {
   return (
     <main className="container py-5 text-center">
-      <h2>Home</h2>
+      <h2>About</h2>
     </main>
   );
 }
