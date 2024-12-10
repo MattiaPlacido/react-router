@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // PAGINE
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
+import PostsPage from "./pages/PostsPage";
 // LAYOUT
 import DefaultLayout from "./layouts/DefaultLayout";
 
@@ -13,7 +14,8 @@ export default function App() {
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
-          {<Route path="/about" element={<AboutPage />} />}
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/posts" element={<PostsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

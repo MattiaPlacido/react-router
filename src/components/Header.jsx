@@ -8,7 +8,7 @@ export default function Header() {
         <a href="/about" className="text-decoration-none text-light mx-2">
           About
         </a>
-        <a href="" className="text-decoration-none text-light mx-2">
+        <a href="/posts" className="text-decoration-none text-light mx-2">
           Lista Post
         </a>
       </div>
