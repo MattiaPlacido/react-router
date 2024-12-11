@@ -13,6 +13,9 @@ export default function Header() {
         <NavLink to="/posts" className="nav-link text-decoration-none mx-2">
           Lista Post
         </NavLink>
+        <NavLink to="/new" className="nav-link text-decoration-none mx-2">
+          Nuovo Post
+        </NavLink>
       </div>
     </header>
   );

@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import NewPostPage from "./pages/NewPostPage";
 //index
 import SinglePost from "./pages/SinglePost";
 //show
@@ -25,6 +26,7 @@ export default function App() {
         <Route element={<AlternativeLayout />}>
           <Route path="/posts" element={<PostsPage />} />
           <Route path="/posts/:id" element={<SinglePost />} />
+          <Route path="/new" element={<NewPostPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
