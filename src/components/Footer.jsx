@@ -1,34 +1,36 @@
+import { NavLink } from "react-router-dom";
+
 export default function Footer() {
   return (
-    <footer className="bg-dark py-4">
+    <footer className="py-4">
       <div className="container d-flex justify-content-around">
-        <a href="/about" className="text-decoration-none text-light mx-2">
+        <NavLink href="/about" className="nav-link text-decoration-none mx-2">
           Chi siamo
-        </a>
-        <a
+        </NavLink>
+        <NavLink
           href="https://instagram.com"
-          className="text-decoration-none text-light mx-2"
+          className="nav-link text-decoration-none mx-2"
         >
           Instagram
-        </a>
-        <a
+        </NavLink>
+        <NavLink
           href="https://youtube.com"
-          className="text-decoration-none text-light mx-2"
+          className="nav-link text-decoration-none mx-2"
         >
           Youtube
-        </a>
-        <a
+        </NavLink>
+        <NavLink
           href="https://twitter.com"
-          className="text-decoration-none text-light mx-2"
+          className="nav-link text-decoration-none mx-2"
         >
           Twitter
-        </a>
-        <a
+        </NavLink>
+        <NavLink
           href="https://gmail.com"
-          className="text-decoration-none text-light mx-2"
+          className="nav-link text-decoration-none mx-2"
         >
           Gmail
-        </a>
+        </NavLink>
       </div>
     </footer>
   );
