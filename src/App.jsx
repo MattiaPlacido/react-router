@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // PAGINE
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
-import PostsPage from "./pages/PostsPage";
+import PostsPage from "./pages/PostsPage/PostsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SinglePost from "./pages/SinglePost";
 // LAYOUT
