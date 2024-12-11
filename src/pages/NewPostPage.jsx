@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const initialFormData = {
-  title: "prova",
+  title: "",
   content: "",
   image: "",
   category: "sport",
@@ -11,6 +11,26 @@ const initialFormData = {
 export default function NewPostPage() {
   const [articleFormData, setArticleFormData] = useState(initialFormData);
 
+  // STORE
+  const storeData = (item) => {
+    fetch("http://localhost:3000/", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(item),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nell'aggiunta dell'articolo");
+        return res.json();
+      })
+      .then((data) => {
+        console.log(`L'articolo è stato aggiunto con successo:`, data);
+      })
+      .catch((error) => console.error("Errore nella richiesta POST :", error));
+  };
+
+  //HANDLERS
   function handleArticleFormData(e) {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -21,9 +41,25 @@ export default function NewPostPage() {
     }));
   }
 
+  const handleFormSubmit = (e) => {
+    const { title, content, image, published, category } = articleFormData;
+    //l'id è assegnato da una funzione nel server
+    if (!title || !content) {
+      //non controllo il resto dei campi perchè sono presenti opzioni di default / sostitutive nel caso dell'immagine
+      alert("Sono presenti dei campi non compilati");
+      return;
+    }
+
+    e.preventDefault();
+
+    storeData(articleFormData);
+    setArticleFormData(initialFormData);
+  };
+
+  //DOM
   return (
     <div className="container py-5 text-light">
-      <form>
+      <form onSubmit={handleFormSubmit}>
         {/* titolo */}
         <div className="mb-3">
           <label htmlFor="post-title" className="form-label">
