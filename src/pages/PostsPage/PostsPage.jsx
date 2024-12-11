@@ -78,7 +78,7 @@ export default function PostsPage() {
             <div className="card-body">
               <h5 className="card-title">{post.title}</h5>
               <p className="card-text fs-6">{post.content}</p>
-              <span class="badge rounded-pill text-bg-dark">
+              <span className="badge rounded-pill text-bg-dark">
                 {post.category}
               </span>
             </div>
