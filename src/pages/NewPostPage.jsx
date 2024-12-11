@@ -10,6 +10,8 @@ const initialFormData = {
 
 export default function NewPostPage() {
   const [articleFormData, setArticleFormData] = useState(initialFormData);
+  const [isBeingModified, toggleIsBeingModified] = useState(false);
+  const [selectedPost, setSelectedPost] = useState();
 
   // STORE
   const storeData = (item) => {
@@ -56,10 +58,15 @@ export default function NewPostPage() {
     setArticleFormData(initialFormData);
   };
 
+  const handleModificationCheckbox = () =>
+    isBeingModified
+      ? toggleIsBeingModified(false)
+      : toggleIsBeingModified(true);
+
   //DOM
   return (
-    <div className="container py-5 text-light">
-      <form onSubmit={handleFormSubmit}>
+    <div className="container p-5 text-light row-cols-2 d-flex">
+      <form onSubmit={handleFormSubmit} className="col-6 mx-3">
         {/* titolo */}
         <div className="mb-3">
           <label htmlFor="post-title" className="form-label">
@@ -109,7 +116,6 @@ export default function NewPostPage() {
           </label>
           <select
             className="form-select"
-            aria-label="Default select example"
             name="category"
             value={articleFormData.category}
             onChange={handleArticleFormData}
@@ -140,6 +146,39 @@ export default function NewPostPage() {
           Submit
         </button>
       </form>
+      <div className="col-6 mx-3">
+        <div className="mb-3 form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="post-modification-state"
+            name=""
+            checked={isBeingModified}
+            onChange={handleModificationCheckbox}
+          />
+          <label className="form-check-label" htmlFor="post-modification-state">
+            Modifica un post esistente
+          </label>
+        </div>
+        <div className={`mb-3 ${isBeingModified ? "" : "d-none"}`}>
+          <label htmlFor="post-list" className="form-label">
+            Lista dei post per id
+          </label>
+          <select
+            className="form-select"
+            name="id"
+            value={"prova"}
+            onChange={console.log("da cambiare")}
+            id="post-list"
+          >
+            <option value="music">Musica</option>
+            <option value="news">News</option>
+            <option value="gaming">Gaming</option>
+            <option value="sport">Sport</option>
+            <option value="politics">Politica</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }
