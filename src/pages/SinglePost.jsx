@@ -16,7 +16,13 @@ export default function SinglePost() {
 
   const getData = () => {
     fetch("http://localhost:3000/" + id)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          if (res.status === 404) goToPage("/not-found");
+          throw new Error("Qualcosa è andato storto");
+        }
+        return res.json();
+      })
       .then((data) => {
         setCurrentPost(data);
       })
@@ -26,16 +32,32 @@ export default function SinglePost() {
   useEffect(getData, []);
 
   return (
-    <main className="container py-5 text-center">
-      <p className="fs-1">Stai guardando il post id: {id}</p>
-      <div className="card">
+    <main className="container d-flex flex-column align-items-center py-5">
+      <p className="fs-1 text-light mb-4">Stai guardando il post id: {id}</p>
+      <div className="card h-50 w-50">
         <img
           src={currentPost.image || "https://via.placeholder.com/600/771796"}
-          className="card-img-top mx-auto w-100 "
+          className="card-img-top"
         />
-        <div className="card-body">
-          <h5 className="card-title">{currentPost.title}</h5>
-          <p className="card-text fs-6">{currentPost.content}</p>
+        <div className="card-body text-dark">
+          <h5 className="card-title">
+            {currentPost.title || "Titolo non disponibile"}
+          </h5>
+          <p className="card-text fs-6">
+            {currentPost.content || "Contenuto non disponibile"}
+          </p>
+          <span class="badge rounded-pill text-bg-dark mx-2">
+            {currentPost.category}
+          </span>
+          <span
+            className={`badge rounded-pill ${
+              currentPost.published
+                ? "text-black bg-white border border-dark"
+                : "text-white bg-dark"
+            }`}
+          >
+            {currentPost.published ? "Pubblicato" : "Non pubblicato"}
+          </span>
         </div>
       </div>
     </main>

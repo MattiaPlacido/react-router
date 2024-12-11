@@ -67,7 +67,7 @@ export default function PostsPage() {
             <Link
               to={"/posts/" + post.id}
               type="button"
-              className={"btn position-absolute bg-info " + styles.show_button}
+              className={"btn position-absolute bg-light " + styles.show_button}
             >
               &#128064;
             </Link>
