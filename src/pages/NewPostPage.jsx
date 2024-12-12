@@ -1,17 +1,19 @@
 import { useState } from "react";
 
-const initialFormData = {
+const initialPostData = {
   title: "",
   content: "",
   image: "",
   category: "sport",
   published: true,
+  id: -1,
 };
 
 export default function NewPostPage() {
-  const [articleFormData, setArticleFormData] = useState(initialFormData);
+  const [articleFormData, setArticleFormData] = useState(initialPostData);
   const [isBeingModified, toggleIsBeingModified] = useState(false);
-  const [selectedPost, setSelectedPost] = useState();
+  const [postIdList, setPostIdList] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(initialPostData);
 
   // STORE
   const storeData = (item) => {
@@ -32,6 +34,39 @@ export default function NewPostPage() {
       .catch((error) => console.error("Errore nella richiesta POST :", error));
   };
 
+  //funzione per ottenere gli id presenti
+  async function getPostDetails(id) {
+    try {
+      const res = await fetch(`http://localhost:3000/${id}`);
+      if (!res.ok) {
+        if (res.status === 404) goToPage("/not-found");
+        throw new Error("Qualcosa è andato storto");
+      }
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Errore nella richiesta SHOW:", error);
+    }
+  }
+
+  const getPostsId = () => {
+    fetch("http://localhost:3000/posts-id")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setPostIdList(data);
+      })
+      .catch((error) => console.error("Errore nella richiesta SHOW :", error));
+  };
+
+  function updateData(id, updatedData) {
+    fetch(`http://localhost:3000/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedData),
+    });
+  }
+
   //HANDLERS
   function handleArticleFormData(e) {
     const value =
@@ -43,7 +78,7 @@ export default function NewPostPage() {
     }));
   }
 
-  const handleFormSubmit = (e) => {
+  function handleFormSubmit(e) {
     const { title, content, image, published, category } = articleFormData;
     //l'id è assegnato da una funzione nel server
     if (!title || !content) {
@@ -53,15 +88,40 @@ export default function NewPostPage() {
     }
 
     e.preventDefault();
+    if (!isBeingModified) {
+      storeData(articleFormData);
+    } else {
+      console.log(selectedPost);
+      updateData(selectedPost.id, {
+        title,
+        content,
+        image,
+        published,
+        category,
+      });
+    }
 
-    storeData(articleFormData);
-    setArticleFormData(initialFormData);
+    setArticleFormData(initialPostData);
+  }
+
+  const handleModificationCheckbox = () => {
+    if (isBeingModified) {
+      toggleIsBeingModified(false);
+    } else {
+      getPostsId();
+      toggleIsBeingModified(true);
+    }
   };
 
-  const handleModificationCheckbox = () =>
-    isBeingModified
-      ? toggleIsBeingModified(false)
-      : toggleIsBeingModified(true);
+  async function handleSelectedPostChange(id) {
+    try {
+      const postData = await getPostDetails(id);
+      setSelectedPost(postData);
+      setArticleFormData(postData);
+    } catch (error) {
+      console.error("Errore durante la modifica del post selezionato:", error);
+    }
+  }
 
   //DOM
   return (
@@ -87,7 +147,7 @@ export default function NewPostPage() {
             Contenuto
           </label>
           <input
-            type="text"
+            type="textarea"
             className="form-control"
             id="post-content"
             name="content"
@@ -167,15 +227,17 @@ export default function NewPostPage() {
           <select
             className="form-select"
             name="id"
-            value={"prova"}
-            onChange={console.log("da cambiare")}
+            value={selectedPost.id}
             id="post-list"
+            onChange={(e) => {
+              handleSelectedPostChange(e.target.value);
+            }}
           >
-            <option value="music">Musica</option>
-            <option value="news">News</option>
-            <option value="gaming">Gaming</option>
-            <option value="sport">Sport</option>
-            <option value="politics">Politica</option>
+            {postIdList.map((id) => (
+              <option value={id} key={id}>
+                {id}
+              </option>
+            ))}
           </select>
         </div>
       </div>
